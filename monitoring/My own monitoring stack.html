@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        My own monitoring stack - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.figma{display:table;position:relative;width:100%;padding-bottom:56.25%}.figma iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid #eee}.markmap-container{height:300px}.markmap-container>svg{width:100%;height:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="My-own-monitoring-stack" data-id="My-own-monitoring-stack"><a class="anchor hidden-xs" href="#My-own-monitoring-stack" title="My-own-monitoring-stack"><span class="octicon octicon-link"></span></a><span>My own monitoring stack</span></h1><h2 id="Monitoring" data-id="Monitoring"><a class="anchor hidden-xs" href="#Monitoring" title="Monitoring"><span class="octicon octicon-link"></span></a><strong><span>Monitoring</span></strong></h2><p><span>In my current job I am a MarkLogic Administrator, which is quite complex. In the version we are currently working on, monitoring of MarkLogic events is quite persistent as the vendor itself admits that their standard system of metrics may show unrealistic data. A few months ago I decided to do a reasearch on the possibilities of monitoring MarkLogic by independent (open-source) applications. The product is not very well known, so there is not much choice, so I decided to create my own stack of monitoring components.</span></p><p><span>Proper application monitoring should support tracking of all events on the server where the application is hosted. Applications based on UNIX system should contain implementation of system library, which passes messages to syslog. In this case to be sure if the application is healthy we should collect information about all application events, system logs and system metrics.</span></p><p><span>The main goal was to create a solution, which does not use large system resources and has great flexibility in configuration with other monitoring components. I divided the description of the solution into 2 parts, in the first part I will describe the components for logs, and further I will describe components for monitoring system metrics.</span></p><h3 id="Logs" data-id="Logs"><a class="anchor hidden-xs" href="#Logs" title="Logs"><span class="octicon octicon-link"></span></a><strong><span>Logs</span></strong></h3><p><span>For redirecting log streams I chose Rsyslog, which has a whole bunch of advantages and is available on most of the available UNIX distributions. I’ve configured Rsyslog on all servers where the application is running so that all system and application logs are redirected to the central Rsyslog server. Our production server is divided into several projects, so the logs on the central server are already pre-filtered and sorted.</span></p><p><span>The central Rsyslog server, has been configured to listen on a specific port to receive messages from all Rsyslog clients. Each message is written to a file according to the template description and sorted into folders based on the hostname of the client from which the message was sent. Writing to a file was not necessary, I could have used directly redirecting the logs to any other application that indexes the log streams. Initial segregation and saving makes it easier for me to configure the next monitoring components and gives me many options in archiving old messages.</span></p><center> 
+<img src="https://i.imgur.com/9OBM6uo.png" alt="" loading="lazy">
+</center><h3 id="Client-Configuration" data-id="Client-Configuration"><a class="anchor hidden-xs" href="#Client-Configuration" title="Client-Configuration"><span class="octicon octicon-link"></span></a><strong><span>Client Configuration:</span></strong></h3><details><summary><code>/etc/rsyslog.d/client-collector.conf</code></summary>
+<pre><code class="c hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code">####################################
+############# INIT MODULE ##########
+####################################
+
+$ModLoad imfile
+$InputFilePollInterval <span class="token number">1</span>
+
+####################################
+########## INIT STATIC LOG #########
+####################################
+
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/TaskServer_ErrorLog.txt"</span> Tag<span class="token operator">=</span><span class="token string">"ml_TSERR"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameTAG"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/TaskServer_RequestLog.txt"</span> Tag<span class="token operator">=</span><span class="token string">"ml_TSREQ"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameTAG"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/AuditLog.txt"</span> Tag<span class="token operator">=</span><span class="token string">"ml_AUDIT"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameTAG"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/CrashLog.txt"</span> Tag<span class="token operator">=</span><span class="token string">"ml_CRASH"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameTAG"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/ErrorLog.txt"</span> Tag<span class="token operator">=</span><span class="token string">"ml_ERROR"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameTAG"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+
+####################################
+########## INIT WILDCARDS ##########
+####################################
+
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/7*_*Log.txt"</span> Tag<span class="token operator">=</span><span class="token string">"db_"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameRegex"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/8*_*Log.txt"</span> Tag<span class="token operator">=</span><span class="token string">"db_"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameRegex"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+<span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imfile"</span> File<span class="token operator">=</span><span class="token string">"/MarkLogicLogs/9*_*Log.txt"</span> Tag<span class="token operator">=</span><span class="token string">"db_"</span> Ruleset<span class="token operator">=</span><span class="token string">"FileNameRegex"</span> addMetadata<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+
+###################################
+############# TEMPLATE ############
+###################################
+
+<span class="token function">template</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"LongTagForwardFormat"</span> type<span class="token operator">=</span><span class="token string">"string"</span> string<span class="token operator">=</span><span class="token string">"&lt;%PRI%&gt;%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag%%$.suffix:1:6:%%msg:::sp-if-no-1st-sp%%msg%"</span><span class="token punctuation">)</span>
+
+###################################
+############# RULESET #############
+###################################
+
+<span class="token function">ruleset</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"FileNameRegex"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        set $<span class="token punctuation">.</span>suffix<span class="token operator">=</span><span class="token function">re_extract</span><span class="token punctuation">(</span>$<span class="token operator">!</span>metadata<span class="token operator">!</span>filename<span class="token punctuation">,</span> <span class="token string">"(.*)/([^/]*)"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"all.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        call sendToLogserver
+        <span class="token punctuation">}</span>
+
+<span class="token function">ruleset</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"FileNameTAG"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        call sendToLogserver
+        <span class="token punctuation">}</span>
+
+<span class="token function">ruleset</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"sendToLogserver"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">action</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"omfwd"</span> Target<span class="token operator">=</span><span class="token string">"centralhostname.com"</span> Port<span class="token operator">=</span><span class="token string">"514"</span> template<span class="token operator">=</span><span class="token string">"LongTagForwardFormat"</span> Protocol<span class="token operator">=</span><span class="token string">"tcp"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+###################################
+########## END<span class="token operator">-</span>CFG ################
+###################################
+</div></div></code></pre>
+</details><h5 id="Central-server-configuration" data-id="Central-server-configuration"><a class="anchor hidden-xs" href="#Central-server-configuration" title="Central-server-configuration"><span class="octicon octicon-link"></span></a><strong><span>Central server configuration:</span></strong></h5><details><summary><code>/etc/rsyslog.d/central-collector.conf</code></summary>
+<pre><code class="c hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code">####################################
+########## JSON FILES ##############
+####################################
+
+  <span class="token function">lookup_table</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"def_host"</span> file<span class="token operator">=</span><span class="token string">"/etc/rsyslog.d/def_name.json"</span> reloadOnHUP<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>  
+
+####################################
+########## INIT MODULE ############# 
+####################################
+
+  <span class="token function">module</span><span class="token punctuation">(</span>load<span class="token operator">=</span><span class="token string">"imtcp"</span><span class="token punctuation">)</span>
+  <span class="token function">module</span><span class="token punctuation">(</span>load<span class="token operator">=</span><span class="token string">"mmrm1stspace"</span><span class="token punctuation">)</span>
+  <span class="token function">input</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"imtcp"</span> port<span class="token operator">=</span><span class="token string">"514"</span><span class="token punctuation">)</span>
+  $FileOwnerNum <span class="token number">1000</span>
+  $FileGroupNum <span class="token number">1000</span>
+  $DirGroupNum <span class="token number">1000</span>
+  $DirOwnerNum <span class="token number">1000</span>
+  $FileCreateMode <span class="token number">0644</span>
+  $DirCreateMode <span class="token number">0755</span>
+
+###################################
+########## TEMPLATE ###############
+###################################
+
+  <span class="token function">template</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"RemoteLogSavePath"</span> type<span class="token operator">=</span><span class="token string">"list"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">constant</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/opt/monitoring/logs/"</span><span class="token punctuation">)</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"$.envTYPE"</span><span class="token punctuation">)</span>  
+    <span class="token function">constant</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/"</span><span class="token punctuation">)</span>    
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"$.clusterID"</span><span class="token punctuation">)</span>
+    <span class="token function">constant</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"$.LogMainFileName"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+    
+  <span class="token function">template</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"LogResultMSG"</span> type<span class="token operator">=</span><span class="token string">"list"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"$.def_hostid"</span><span class="token punctuation">)</span>
+    <span class="token function">constant</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">" "</span><span class="token punctuation">)</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"$.LogMSGFileName"</span><span class="token punctuation">)</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"msg"</span> compressspace<span class="token operator">=</span><span class="token string">"on"</span> spifno1stsp<span class="token operator">=</span><span class="token string">"on"</span><span class="token punctuation">)</span>
+    <span class="token function">property</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"msg"</span><span class="token punctuation">)</span>
+    <span class="token function">constant</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  
+###################################
+########## ACTION #################
+###################################
+
+set $<span class="token punctuation">.</span>clusterDB <span class="token operator">=</span> <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token string">"def_host"</span><span class="token punctuation">,</span> $hostname<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>$<span class="token punctuation">.</span>clusterDB <span class="token operator">==</span> <span class="token string">""</span><span class="token punctuation">)</span> then <span class="token punctuation">{</span>
+    set $<span class="token punctuation">.</span>envTYPE <span class="token operator">=</span> <span class="token string">"OTHER"</span><span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>clusterID <span class="token operator">=</span> $hostname<span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>def_hostid <span class="token operator">=</span> $hostname<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    set $<span class="token punctuation">.</span>envTYPE <span class="token operator">=</span> <span class="token function">substring</span><span class="token punctuation">(</span>$<span class="token punctuation">.</span>clusterDB<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>clusterID <span class="token operator">=</span> <span class="token function">substring</span><span class="token punctuation">(</span>$<span class="token punctuation">.</span>clusterDB<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>def_hostid <span class="token operator">=</span> $<span class="token punctuation">.</span>clusterDB<span class="token punctuation">;</span>    
+<span class="token punctuation">}</span>
+<span class="token function">action</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"mmrm1stspace"</span><span class="token punctuation">)</span>
+set $<span class="token punctuation">.</span>LookUpJSON <span class="token operator">=</span> <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token string">"def_host"</span><span class="token punctuation">,</span> <span class="token function">substring</span><span class="token punctuation">(</span>$programname<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>$<span class="token punctuation">.</span>LookUpJSON <span class="token operator">==</span> <span class="token string">""</span><span class="token punctuation">)</span> then <span class="token punctuation">{</span>
+    set $<span class="token punctuation">.</span>LogMainFileName <span class="token operator">=</span> $programname<span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>LogMSGFileName <span class="token operator">=</span> $programname<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    set $<span class="token punctuation">.</span>LogMainFileName <span class="token operator">=</span> $<span class="token punctuation">.</span>LookUpJSON<span class="token punctuation">;</span>
+    set $<span class="token punctuation">.</span>LogMSGFileName <span class="token operator">=</span> $programname<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">action</span><span class="token punctuation">(</span>type<span class="token operator">=</span><span class="token string">"omfile"</span> DynaFile<span class="token operator">=</span><span class="token string">"RemoteLogSavePath"</span> Template<span class="token operator">=</span><span class="token string">"LogResultMSG"</span><span class="token punctuation">)</span>
+stop
+
+###################################
+########## END<span class="token operator">-</span>CFG ################
+###################################
+</div></div></code></pre>
+</details><h5 id="Defined-names-file-structure-example" data-id="Defined-names-file-structure-example"><a class="anchor hidden-xs" href="#Defined-names-file-structure-example" title="Defined-names-file-structure-example"><span class="octicon octicon-link"></span></a><strong><span>Defined names (file structure example)</span></strong></h5><details><summary><code>/etc/rsyslog.d/def_name.json</code></summary>
+<pre><code class="json hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token punctuation">{</span> <span class="token property">"version"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"type"</span>    <span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+  <span class="token property">"table"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token property">"index"</span> <span class="token operator">:</span> <span class="token string">"apphostname1.com"</span><span class="token punctuation">,</span> <span class="token property">"value"</span> <span class="token operator">:</span> <span class="token string">"SERV_1"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"index"</span> <span class="token operator">:</span> <span class="token string">"apphostname2.com"</span><span class="token punctuation">,</span> <span class="token property">"value"</span> <span class="token operator">:</span> <span class="token string">"SERV_2"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"index"</span> <span class="token operator">:</span> <span class="token string">"apphostname3.com"</span><span class="token punctuation">,</span> <span class="token property">"value"</span> <span class="token operator">:</span> <span class="token string">"SERV_3"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token property">"index"</span> <span class="token operator">:</span> <span class="token string">"8001"</span><span class="token punctuation">,</span> <span class="token property">"value"</span> <span class="token operator">:</span> <span class="token string">"ml_ADMIN"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token punctuation">]</span><span class="token punctuation">}</span>
+</div></div></code></pre>
+</details><hr><p><span>The preprocessed logs via Rsyslog are already on the central server, so the next step is to configure the search/indexing and visualization software. In my solution I used the Promtail-Loki-Grafana stack configured as a cluster on the docker. In the configuration I used 3 Loki instances connected to an Nginx gateway to route the read and write loads from the clients (Grafana, Promtail). We then get a much smoother running front-end application.</span></p><p><img src="https://i.imgur.com/52o6VyM.png" alt="" loading="lazy"></p><h5 id="Configuration-of-docker-compose" data-id="Configuration-of-docker-compose"><a class="anchor hidden-xs" href="#Configuration-of-docker-compose" title="Configuration-of-docker-compose"><span class="octicon octicon-link"></span></a><strong><span>Configuration of docker-compose</span></strong></h5><details><summary><code>docker-compose-ha.yaml</code></summary>
+<pre><code class="yaml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">"3.8"</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+
+  <span class="token key atrule">grafana</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/grafana<span class="token punctuation">:</span>7.5.6
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"3000:3000"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+    <span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+      <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+      <span class="token key atrule">placement</span><span class="token punctuation">:</span>
+        <span class="token key atrule">constraints</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> node.role == manager
+      <span class="token key atrule">restart_policy</span><span class="token punctuation">:</span>
+        <span class="token key atrule">condition</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure      
+
+  <span class="token key atrule">promtail</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/promtail<span class="token punctuation">:</span>2.2.1
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /opt/monitoring/logs<span class="token punctuation">:</span>/var/log
+      <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/etc/promtail/
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"9080:9080"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">-</span>config.file=/etc/promtail/promtail.yaml
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+
+  <span class="token key atrule">loki-gateway</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.19</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./config/nginx<span class="token punctuation">-</span>loki.conf<span class="token punctuation">:</span>/etc/nginx/nginx.conf
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"80"</span>
+      <span class="token punctuation">-</span> <span class="token string">"3100"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+
+  <span class="token key atrule">loki-frontend</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/loki<span class="token punctuation">:</span>2.2.1
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/etc/loki/
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token string">"3100"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token string">"-config.file=/etc/loki/loki-memberlist.yaml -target=query-frontend"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+    <span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+      <span class="token key atrule">mode</span><span class="token punctuation">:</span> replicated
+      <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
+
+  <span class="token key atrule">loki-1</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/loki<span class="token punctuation">:</span>2.2.1
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/etc/loki/
+      <span class="token punctuation">-</span> ./chunks<span class="token punctuation">:</span>/loki/chunks/
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"3100"</span>
+      <span class="token punctuation">-</span> <span class="token string">"7946"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token string">"-config.file=/etc/loki/loki-memberlist.yaml -target=all"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure
+
+  <span class="token key atrule">loki-2</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/loki<span class="token punctuation">:</span>2.2.1
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/etc/loki/
+      <span class="token punctuation">-</span> ./chunks<span class="token punctuation">:</span>/loki/chunks/
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"3100"</span>
+      <span class="token punctuation">-</span> <span class="token string">"7946"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token string">"-config.file=/etc/loki/loki-memberlist.yaml -target=all"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure
+
+  <span class="token key atrule">loki-3</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> grafana/loki<span class="token punctuation">:</span>2.2.1
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/etc/loki/
+      <span class="token punctuation">-</span> ./chunks<span class="token punctuation">:</span>/loki/chunks/
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"3100"</span>
+      <span class="token punctuation">-</span> <span class="token string">"7946"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token string">"-config.file=/etc/loki/loki-memberlist.yaml -target=all"</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> loki
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> on<span class="token punctuation">-</span>failure
+    
+<span class="token key atrule">networks</span><span class="token punctuation">:</span>
+  <span class="token key atrule">loki</span><span class="token punctuation">:</span>
+</div></div></code></pre>
+</details><details><summary><code>promtail.yaml</code></summary>
+<pre><code class="yaml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token key atrule">server</span><span class="token punctuation">:</span>
+    <span class="token key atrule">http_listen_port</span><span class="token punctuation">:</span> <span class="token number">9080</span>
+    <span class="token key atrule">grpc_listen_port</span><span class="token punctuation">:</span> <span class="token number">0</span>
+    <span class="token key atrule">log_level</span><span class="token punctuation">:</span> <span class="token string">"debug"</span>
+  
+<span class="token key atrule">positions</span><span class="token punctuation">:</span>
+    <span class="token key atrule">filename</span><span class="token punctuation">:</span> /tmp/positions.yaml
+  
+<span class="token key atrule">clients</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//loki<span class="token punctuation">-</span>gateway<span class="token punctuation">:</span>80/loki/api/v1/push
+  
+<span class="token key atrule">scrape_configs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> system
+    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">labels</span><span class="token punctuation">:</span>    
+        <span class="token key atrule">job</span><span class="token punctuation">:</span> MarkLogic
+        <span class="token key atrule">__path__</span><span class="token punctuation">:</span> /S<span class="token important">*/*</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> ml 
+    <span class="token punctuation">-</span> <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">job</span><span class="token punctuation">:</span> System
+        <span class="token key atrule">__path__</span><span class="token punctuation">:</span> /var/log/<span class="token important">*log</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> srv
+</div></div></code></pre>
+</details><details><summary><code>nginx-loki.conf</code></summary>
+<pre><code class="nginx hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="hljs-attribute">error_log</span>  /dev/stderr;
+<span class="hljs-attribute">pid</span>        /tmp/nginx.pid;
+<span class="hljs-attribute">worker_rlimit_nofile</span> <span class="hljs-number">8192</span>;
+
+<span class="hljs-section">events</span> {
+    <span class="hljs-attribute">worker_connections</span>  <span class="hljs-number">4096</span>;  <span class="hljs-comment">## Default: 1024</span>
+}
+
+<span class="hljs-section">http</span> {
+
+  <span class="hljs-attribute">default_type</span> application/octet-stream;
+  <span class="hljs-attribute">log_format</span>   main <span class="hljs-string">'<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>]  <span class="hljs-variable">$status</span> '</span>
+    <span class="hljs-string">'"<span class="hljs-variable">$request</span>" <span class="hljs-variable">$body_bytes_sent</span> "<span class="hljs-variable">$http_referer</span>" '</span>
+    <span class="hljs-string">'"<span class="hljs-variable">$http_user_agent</span>" "<span class="hljs-variable">$http_x_forwarded_for</span>"'</span>;
+  <span class="hljs-attribute">access_log</span>   /dev/stderr  main;
+  <span class="hljs-attribute">sendfile</span>     <span class="hljs-literal">on</span>;
+  <span class="hljs-attribute">tcp_nopush</span>   <span class="hljs-literal">on</span>;
+
+  <span class="hljs-section">upstream</span> distributor {
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">1</span>:<span class="hljs-number">3100</span>;
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">2</span>:<span class="hljs-number">3100</span>;
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">3</span>:<span class="hljs-number">3100</span>;
+  }
+
+  <span class="hljs-section">upstream</span> querier {
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">1</span>:<span class="hljs-number">3100</span>;
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">2</span>:<span class="hljs-number">3100</span>;
+    <span class="hljs-attribute">server</span> loki-<span class="hljs-number">3</span>:<span class="hljs-number">3100</span>;
+  }
+
+  <span class="hljs-section">upstream</span> query-frontend {
+    <span class="hljs-attribute">server</span> loki-frontend:<span class="hljs-number">3100</span>;
+  }
+
+  <span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;
+    <span class="hljs-attribute">proxy_set_header</span>     X-Scope-OrgID docker-ha;
+
+    <span class="hljs-section">location</span> = /loki/api/v1/push {
+        <span class="hljs-attribute">proxy_pass</span>       http://distributor<span class="hljs-variable">$request_uri</span>;
+    }
+    
+    <span class="hljs-section">location</span> = /ring {
+        <span class="hljs-attribute">proxy_pass</span>       http://distributor<span class="hljs-variable">$request_uri</span>;
+    }
+
+    <span class="hljs-section">location</span> = /loki/api/v1/tail {
+        <span class="hljs-attribute">proxy_pass</span>       http://querier<span class="hljs-variable">$request_uri</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;
+    }
+
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ /loki/api/.*</span> {
+        <span class="hljs-attribute">proxy_pass</span>       http://query-frontend<span class="hljs-variable">$request_uri</span>;
+    }
+  }
+
+  <span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">3100</span>;
+    <span class="hljs-attribute">proxy_set_header</span>     X-Scope-OrgID docker-ha;
+
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ /loki/api/.*</span> {
+        <span class="hljs-attribute">proxy_pass</span>       http://querier<span class="hljs-variable">$request_uri</span>;
+    }
+    
+  }
+}
+
+</div></div></code></pre>
+</details><details><summary><code>loki-memberlist.yaml</code></summary>
+<pre><code class="yaml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token key atrule">auth_enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+
+<span class="token key atrule">http_prefix</span><span class="token punctuation">:</span>
+
+<span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">http_listen_address</span><span class="token punctuation">:</span> 0.0.0.0
+  <span class="token key atrule">grpc_listen_address</span><span class="token punctuation">:</span> 0.0.0.0
+  <span class="token key atrule">http_listen_port</span><span class="token punctuation">:</span> <span class="token number">3100</span>
+  <span class="token key atrule">grpc_listen_port</span><span class="token punctuation">:</span> <span class="token number">9095</span>
+  <span class="token key atrule">log_level</span><span class="token punctuation">:</span> debug
+
+<span class="token key atrule">memberlist</span><span class="token punctuation">:</span>
+  <span class="token key atrule">join_members</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"loki-1"</span><span class="token punctuation">,</span> <span class="token string">"loki-2"</span><span class="token punctuation">,</span> <span class="token string">"loki-3"</span><span class="token punctuation">]</span>
+  <span class="token key atrule">dead_node_reclaim_time</span><span class="token punctuation">:</span> 30s
+  <span class="token key atrule">gossip_to_dead_nodes_time</span><span class="token punctuation">:</span> 15s
+  <span class="token key atrule">left_ingesters_timeout</span><span class="token punctuation">:</span> 30s
+  <span class="token key atrule">bind_addr</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">]</span>
+  <span class="token key atrule">bind_port</span><span class="token punctuation">:</span> <span class="token number">7946</span>
+
+<span class="token key atrule">ingester</span><span class="token punctuation">:</span>
+  <span class="token key atrule">lifecycler</span><span class="token punctuation">:</span>
+    <span class="token key atrule">join_after</span><span class="token punctuation">:</span> 60s
+    <span class="token key atrule">observe_period</span><span class="token punctuation">:</span> 5s
+    <span class="token key atrule">ring</span><span class="token punctuation">:</span>
+      <span class="token key atrule">replication_factor</span><span class="token punctuation">:</span> <span class="token number">2</span>
+      <span class="token key atrule">kvstore</span><span class="token punctuation">:</span>
+        <span class="token key atrule">store</span><span class="token punctuation">:</span> memberlist
+    <span class="token key atrule">final_sleep</span><span class="token punctuation">:</span> 0s
+  <span class="token key atrule">chunk_idle_period</span><span class="token punctuation">:</span> 1h
+  <span class="token key atrule">max_chunk_age</span><span class="token punctuation">:</span> 1h
+  <span class="token key atrule">chunk_retain_period</span><span class="token punctuation">:</span> 30s
+  <span class="token key atrule">chunk_encoding</span><span class="token punctuation">:</span> snappy
+  <span class="token key atrule">chunk_target_size</span><span class="token punctuation">:</span> <span class="token number">0</span>
+  <span class="token key atrule">chunk_block_size</span><span class="token punctuation">:</span> <span class="token number">262144</span>
+
+<span class="token key atrule">schema_config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">configs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token datetime number">2020-08-01</span>
+    <span class="token key atrule">store</span><span class="token punctuation">:</span> boltdb<span class="token punctuation">-</span>shipper
+    <span class="token key atrule">object_store</span><span class="token punctuation">:</span> filesystem
+    <span class="token key atrule">schema</span><span class="token punctuation">:</span> v11
+    <span class="token key atrule">index</span><span class="token punctuation">:</span>
+      <span class="token key atrule">prefix</span><span class="token punctuation">:</span> index_
+      <span class="token key atrule">period</span><span class="token punctuation">:</span> 24h
+
+<span class="token key atrule">storage_config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">boltdb_shipper</span><span class="token punctuation">:</span>
+    <span class="token key atrule">shared_store</span><span class="token punctuation">:</span> filesystem
+    <span class="token key atrule">active_index_directory</span><span class="token punctuation">:</span> /tmp/loki/index
+    <span class="token key atrule">cache_location</span><span class="token punctuation">:</span> /tmp/loki/boltdb<span class="token punctuation">-</span>cache
+  <span class="token key atrule">filesystem</span><span class="token punctuation">:</span>
+    <span class="token key atrule">directory</span><span class="token punctuation">:</span> /loki/chunks
+
+<span class="token key atrule">limits_config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">max_cache_freshness_per_query</span><span class="token punctuation">:</span> <span class="token string">'10m'</span>
+  <span class="token key atrule">enforce_metric_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">reject_old_samples</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">reject_old_samples_max_age</span><span class="token punctuation">:</span> 30m
+  <span class="token key atrule">ingestion_rate_mb</span><span class="token punctuation">:</span> <span class="token number">10</span>
+  <span class="token key atrule">ingestion_burst_size_mb</span><span class="token punctuation">:</span> <span class="token number">20</span>
+
+<span class="token key atrule">chunk_store_config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">max_look_back_period</span><span class="token punctuation">:</span> 336h
+
+<span class="token key atrule">table_manager</span><span class="token punctuation">:</span>
+  <span class="token key atrule">retention_deletes_enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">retention_period</span><span class="token punctuation">:</span> 336h
+
+<span class="token key atrule">query_range</span><span class="token punctuation">:</span>
+  <span class="token key atrule">align_queries_with_step</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">max_retries</span><span class="token punctuation">:</span> <span class="token number">5</span>
+  <span class="token key atrule">split_queries_by_interval</span><span class="token punctuation">:</span> 15m
+  <span class="token key atrule">parallelise_shardable_queries</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">cache_results</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+  <span class="token key atrule">results_cache</span><span class="token punctuation">:</span>
+    <span class="token key atrule">cache</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enable_fifocache</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">fifocache</span><span class="token punctuation">:</span>
+        <span class="token key atrule">size</span><span class="token punctuation">:</span> <span class="token number">1024</span>
+        <span class="token key atrule">validity</span><span class="token punctuation">:</span> 24h
+
+<span class="token key atrule">frontend</span><span class="token punctuation">:</span>
+  <span class="token key atrule">log_queries_longer_than</span><span class="token punctuation">:</span> 5s
+  <span class="token key atrule">downstream_url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//loki<span class="token punctuation">-</span>gateway<span class="token punctuation">:</span><span class="token number">3100</span>
+  <span class="token key atrule">compress_responses</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+<span class="token key atrule">querier</span><span class="token punctuation">:</span>
+  <span class="token key atrule">query_ingesters_within</span><span class="token punctuation">:</span> 2h
+</div></div></code></pre>
+</details><hr><h3 id="Metrics-monitoring" data-id="Metrics-monitoring"><a class="anchor hidden-xs" href="#Metrics-monitoring" title="Metrics-monitoring"><span class="octicon octicon-link"></span></a><strong><span>Metrics monitoring</span></strong></h3><p><span>I chose components to monitor the system metrics:</span></p><ul>
+<li><strong><span>Telegraf</span></strong><span> is the agent for collecting and reporting metrics and data. Telegraf is a plugin-driven server agent for collecting and sending metrics and events from databases, systems, and IoT sensors.</span></li>
+<li><strong><span>InfluxDB</span></strong><span> is an open-source database optimized for fast, high-availability storage and retrieval of time series data written in Go. InfluxDB is great for operations monitoring, application metrics, and real-time analytics.</span></li>
+</ul><p><span>Telegraph is installed on all servers with the application being monitored. The configuration file is set to have the agent collect system metrics and send to the central server where the InfluxDB image container is running.</span></p><h5 id="Configuring-Telegraf-on-the-application-server-side" data-id="Configuring-Telegraf-on-the-application-server-side"><a class="anchor hidden-xs" href="#Configuring-Telegraf-on-the-application-server-side" title="Configuring-Telegraf-on-the-application-server-side"><span class="octicon octicon-link"></span></a><strong><span>Configuring Telegraf on the application server side</span></strong></h5><details><summary><code>telegraf.conf</code></summary>
+<pre><code class="yaml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token punctuation">[</span>global_tags<span class="token punctuation">]</span>
+
+<span class="token comment"># Configuration for telegraf agent</span>
+<span class="token punctuation">[</span>agent<span class="token punctuation">]</span>
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  debug = false
+  quiet = false
+  hostname = "influxdb"
+  omit_hostname = false
+
+<span class="token comment"># InfluxDB v2</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>outputs.influxdb_v2<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  urls = <span class="token punctuation">[</span><span class="token string">"$INFLUX_HOST"</span><span class="token punctuation">]</span>
+  token = "$TELEGRAF_WRITE_TOKEN"
+  organization = "$INFLUX_ORG"
+  bucket = "$INFLUX_BUCKET"
+
+<span class="token comment"># Read metrics about cpu usage</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.cpu<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  percpu = true
+  totalcpu = true
+  fielddrop = <span class="token punctuation">[</span><span class="token string">"time_*"</span><span class="token punctuation">]</span>
+
+<span class="token comment"># Read metrics about disk usage by mount point</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.disk<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  ignore_fs = <span class="token punctuation">[</span><span class="token string">"tmpfs"</span><span class="token punctuation">,</span> <span class="token string">"devtmpfs"</span><span class="token punctuation">]</span>
+
+<span class="token comment"># Read metrics about disk IO by device</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.diskio<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Get kernel statistics from /proc/stat</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.kernel<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Read metrics about memory usage</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.mem<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Get the number of processes and group them by status</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.processes<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Read metrics about swap memory usage</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.swap<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Read metrics about system load &amp; uptime</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.system<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token comment"># Read metrics about network interface usage</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.net<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+  
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.netstat<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.interrupts<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+
+<span class="token punctuation">[</span><span class="token punctuation">[</span>inputs.linux_sysctl_fs<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  <span class="token comment"># no configuration</span>
+</div></div></code></pre>
+</details><hr><h5 id="Configuring-InfluxDB-on-the-central-server-side" data-id="Configuring-InfluxDB-on-the-central-server-side"><a class="anchor hidden-xs" href="#Configuring-InfluxDB-on-the-central-server-side" title="Configuring-InfluxDB-on-the-central-server-side"><span class="octicon octicon-link"></span></a><strong><span>Configuring InfluxDB on the central server side</span></strong></h5><p><span>InfluxDB settings were added to the docker-compose-ha.yaml file</span></p><details><summary><code>docker-compose-ha.yaml</code></summary>
+<pre><code class="yaml hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code"><span class="token key atrule">influxdb</span><span class="token punctuation">:</span>
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> influxdb
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> influxdb<span class="token punctuation">:</span>2.0.6
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+        <span class="token key atrule">loki</span><span class="token punctuation">:</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> 8086<span class="token punctuation">:</span><span class="token number">8086</span>
+    <span class="token key atrule">env_file</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token string">'./config/influxdb.env'</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">"volume"</span>
+            <span class="token key atrule">source</span><span class="token punctuation">:</span> influxdb2<span class="token punctuation">-</span>data
+            <span class="token key atrule">target</span><span class="token punctuation">:</span> /var/lib/influxdb/
+        
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token key atrule">influxdb2-data</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> influxdb2<span class="token punctuation">-</span>data
+</div></div></code></pre>
+</details><details><summary><code>influxdb.env</code></summary>
+<pre><code class="bash hljs"><div class="wrapper"><div class="gutter linenumber"><span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span></div><div class="code">INFLUXDB_DATA_ENGINE=tsm1
+INFLUXDB_REPORTING_DISABLED=<span class="hljs-literal">false</span>
+INFLUX_DB=metrics
+INFLUXDB_ADMIN_ENABLED=<span class="hljs-literal">true</span>
+INFLUX_USERNAME=xxx
+INFLUX_PASSWORD=yyy
+INFLUX_RETENTION=0
+</div></div></code></pre>
+</details><hr><h3 id="Summary" data-id="Summary"><a class="anchor hidden-xs" href="#Summary" title="Summary"><span class="octicon octicon-link"></span></a><strong><span>Summary</span></strong></h3><p><span>At the very end, all that remains is to run all the components and connect all the data sources in Grafana from the browser level. This solution gives us the ability to monitor any application both on our own server infrastructure and in the cloud.</span></p><h3 id="Functional-diagram-of-the-complete-solution" data-id="Functional-diagram-of-the-complete-solution"><a class="anchor hidden-xs" href="#Functional-diagram-of-the-complete-solution" title="Functional-diagram-of-the-complete-solution"><span class="octicon octicon-link"></span></a><strong><span>Functional diagram of the complete solution</span></strong></h3><p><img src="https://i.imgur.com/Cb5GYhF.png" alt="" loading="lazy"></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#My-own-monitoring-stack" title="My own monitoring stack">My own monitoring stack</a><ul class="nav">
+<li class=""><a href="#Monitoring" title="Monitoring">Monitoring</a><ul class="nav">
+<li><a href="#Logs" title="Logs">Logs</a></li>
+<li><a href="#Client-Configuration" title="Client Configuration:">Client Configuration:</a></li>
+<li><a href="#Metrics-monitoring" title="Metrics monitoring">Metrics monitoring</a></li>
+<li><a href="#Summary" title="Summary">Summary</a></li>
+<li class=""><a href="#Functional-diagram-of-the-complete-solution" title="Functional diagram of the complete solution">Functional diagram of the complete solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#My-own-monitoring-stack" title="My own monitoring stack">My own monitoring stack</a><ul class="nav">
+<li class=""><a href="#Monitoring" title="Monitoring">Monitoring</a><ul class="nav">
+<li><a href="#Logs" title="Logs">Logs</a></li>
+<li><a href="#Client-Configuration" title="Client Configuration:">Client Configuration:</a></li>
+<li><a href="#Metrics-monitoring" title="Metrics monitoring">Metrics monitoring</a></li>
+<li><a href="#Summary" title="Summary">Summary</a></li>
+<li class=""><a href="#Functional-diagram-of-the-complete-solution" title="Functional diagram of the complete solution">Functional diagram of the complete solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
